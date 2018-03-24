@@ -1,12 +1,9 @@
 import React from 'react';
-// import Login from './pages/Login';
-// import Dashboard from './pages/Dashboard';
-// import Transactions from './pages/Transactions';
 
-const Login = () => <span>Login</span>;
-const Dashboard = () => <span>Dashboard</span>;
-const Profile = () => <span>Profile</span>;
-const Transactions = () => <span>Transactions</span>;
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import Transactions from './pages/Transactions';
 
 export default {
   public: [
