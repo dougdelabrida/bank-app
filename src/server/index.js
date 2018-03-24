@@ -1,19 +1,75 @@
 const webpack = require('webpack');
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
+
+const accounts = require('./mockData/accounts');
+const profile = require('./mockData/profile');
 
 const app = express();
-
-const port = 3000;
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static('dist'));
 
-app.get('/api', function (req, res) {
-  res.json({message: 'worked'})
+const router = express.Router();
+
+// Base Response
+const baseResponse = {
+  limit: 5,
+  offset: 0,
+  total: 0,
+  status: 200
+}
+
+const limitResponse = ((data, limit, offset) => {
+  return data.slice(offset, (parseInt(limit) + parseInt(offset)));
 });
 
-app.listen(port, function (error) {
+router.get('/accounts', function (req, res) {
+
+  const { limit = 5, offset = 0 } = req.query;
+  // copy the baseResponse object
+  const response = Object.assign({}, baseResponse);
+  
+  response.limit = limit;
+  response.offset = offset;
+  response.total = accounts.length;
+  response.results = limitResponse(accounts, limit, offset).map(({number}) => ({number}));
+  
+  res.json(response);
+});
+
+router.get('/accounts/:number/transactions', function (req, res) {
+  
+  const { limit = 5, offset = 0 } = req.query;
+  const { number } = req.params;
+  
+  // copy the baseResponse object
+  const response = Object.assign({}, baseResponse);
+  const account = accounts.find(account => account.number == number);
+  
+  response.limit = limit;
+  response.offset = offset;
+  response.total = account.transactions.length;
+  response.results = limitResponse(account.transactions, limit, offset);
+  
+  res.json(response);
+});
+
+router.get('/profile', function (req, res) {
+  const response = {
+    status: 200,
+    data: profile
+  };
+  res.json(response);
+});
+
+app.use('/api', router);
+
+app.listen(3000, function (error) {
   if(error) {
     console.log(error);
+  } else {
+    console.log('server started');
   }
 });
