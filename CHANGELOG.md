@@ -1,6 +1,10 @@
 ## Changelog
 This file contains all changes made in this project.
 
+## 0.3.0 - 2018-03-24
+### Added
+- Implemented basic API rest
+
 ## 0.2.0 - 2018-03-24
 ### Added
 - README for instructios about the project.
