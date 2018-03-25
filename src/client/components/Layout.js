@@ -4,9 +4,7 @@ import Header from './Header';
 
 const Layout = ({children}) => (
   <div>
-    <Header>
-      Teste
-    </Header>
+    <Header />
     <main>
       {children}
     </main>
