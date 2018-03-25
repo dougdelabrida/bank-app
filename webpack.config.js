@@ -9,13 +9,17 @@ module.exports = {
   },
   module: {
     rules: [
-      { 
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
           presets: ["react", "stage-2"]
         }        
+      },
+      {
+        test: /\.(jpg|png|svg)$/,
+        loader: 'url-loader'
       }
     ]
   },
