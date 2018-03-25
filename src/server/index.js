@@ -40,7 +40,7 @@ router.get('/accounts', function (req, res) {
   response.limit = limit;
   response.offset = offset;
   response.total = accounts.length;
-  response.results = limitResponse(accounts, limit, offset).map(({number}) => ({number}));
+  response.results = limitResponse(accounts, limit, offset).map(({number, balance}) => ({number, balance}));
   
   res.json(response);
 });

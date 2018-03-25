@@ -1,6 +1,7 @@
 module.exports = [
   {
     number: '0044533',
+    balance: 3.03,
     transactions: [{"type":"Payment","value":386.7,"date":"2016-10-07 10:24:04"},
     {"type":"Payment","value":521.12,"date":"2017-09-27 01:32:08"},
     {"type":"Withdraw","value":454.26,"date":"2016-10-25 05:46:15"},
@@ -74,6 +75,7 @@ module.exports = [
   },
   {
     number: '0047111',
+    balance: 134.18,
     transactions: [{"type":"Deposit","value":598.49,"date":"2016-09-27 09:46:44"},
     {"type":"Deposit","value":332.42,"date":"2018-01-31 07:07:41"},
     {"type":"Deposit","value":451.71,"date":"2017-03-31 20:17:15"},
@@ -147,6 +149,7 @@ module.exports = [
   },
   {
     number: '0014112',
+    balance: 4334.58,
     transactions: [{"type":"Deposit","value":931.44,"date":"2017-08-12 15:19:06"},
     {"type":"Deposit","value":434.58,"date":"2018-02-26 05:11:29"},
     {"type":"Payment","value":947.37,"date":"2016-08-17 20:15:39"},
