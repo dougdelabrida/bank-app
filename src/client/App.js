@@ -10,18 +10,25 @@ const mainTheme = {
 }
 
 injectGlobal`
+  @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+  
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
   html, body {
     height: 100%;
     margin: 0;
+    font-family: Robto, sans-serif;
   }
 `;
 
 export default () => (
   <ThemeProvider theme={mainTheme}>
     <Switch>
-      
+
       {routes.private.map((route, i) =>
-        <Route path={route.path} key={i} render={props =>
+        <Route exact path={route.path} key={i} render={props =>
           <Layout>
             <route.component />
           </Layout>
