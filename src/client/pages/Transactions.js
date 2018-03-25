@@ -42,13 +42,15 @@ const Bottom = styled.div`
 
 class Transactions extends PureComponent {
   componentDidMount() {
+    if (!this.props.selectedAccount) return;
     if (!this.props.transactions.isFetching && this.props.transactions.data.length === 0) {
-      this.props.actions.fetchTransactions('0044533', 0, 15);
+      this.props.actions.fetchTransactions(this.props.selectedAccount, 0, 15);
     }
   }
 
   render() {
     const { data, isFetching, offset, limit, total } = this.props.transactions;
+    const { selectedAccount } = this.props;
 
     return (
       <div>
@@ -76,8 +78,9 @@ class Transactions extends PureComponent {
         </Table>
 
         <Bottom>
+          {!selectedAccount && <div>No account selected</div>}
           {total > offset && 
-            <Button onClick={() => this.props.actions.fetchTransactions('0044533', parseInt(offset) + 15, 15)}>Load more</Button>
+            <Button onClick={() => this.props.actions.fetchTransactions(selectedAccount, parseInt(offset) + 15, 15)}>Load more</Button>
           }
           {isFetching && <div>Loading</div>}
         </Bottom>
@@ -89,7 +92,8 @@ class Transactions extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    transactions: state.transactions
+    transactions: state.transactions,
+    selectedAccount: state.accounts.selected
   };
 }
 

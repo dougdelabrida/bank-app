@@ -19,6 +19,7 @@ const AccountsWrapper = styled.div`
 const AccountItem = styled.div`
   border: none;
   color: #fff;
+  cursor: pointer;
   padding: 16px 32px;
   margin: 6px;
   color: #000;
