@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { injectGlobal, ThemeProvider } from 'styled-components';
+import { injectGlobal, ThemeProvider, css } from 'styled-components';
 import { Provider } from 'react-redux';
 import Layout from './components/Layout';
 
@@ -11,7 +11,21 @@ const storeInstace = store();
 
 const mainTheme = {
   blueGradient: 'linear-gradient(to right, #000428, #004e92)',
-  mainBlue: '#002d62'
+  mainBlue: '#002d62',
+  media: {
+    desktopOnly: (...args) =>
+      css`
+        @media (min-width: 780px) {
+          ${ css(...args) }
+        }
+      `,
+    mobileOnly: (...args) =>
+      css`
+        @media (max-width: 779px) {
+          ${ css(...args) }
+        }
+      `
+  }
 };
 
 injectGlobal`
