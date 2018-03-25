@@ -5,7 +5,7 @@ var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.config');
 
 gulp.task('webpack:watch', function () {
-  exec('webpack-dev-server --mode development --open')
+  exec('webpack-dev-server --mode development --open --history-api-fallback')
 });
 
 gulp.task('server', function (cb) {
