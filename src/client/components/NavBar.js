@@ -7,11 +7,35 @@ const NavWrapper = styled.div`
   display: block;
 `;
 
+const NavButton = styled.button`
+  border: none;
+  background: transparent;
+
+  &::before, &::after, & > div {
+    content: '';
+    display: block;
+    background: #fff;
+    margin: 6px 0;
+    height: 2px;
+    width: 32px;
+  }
+
+  &:focus {
+    outline: none;
+    background: rgba(0, 0, 0, .15);
+  }
+
+  ${props => props.theme.media.desktopOnly`
+    display: none;
+  `}
+`;
+
 const Nav = styled.div`
   position: fixed;
   background: #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .7);
   top: 0;
-  right: -255px;
+  right: -265px;
   bottom: 0;
   width: 255px;
   transition: right .3s;
@@ -32,6 +56,17 @@ const Nav = styled.div`
       background: rgba(0, 0, 0, .1);
     }
   }
+
+  ${props => props.theme.media.desktopOnly`
+    position: initial;
+    background: transparent;
+    box-shadow: none;
+    width: auto;
+
+    & > a {
+      display: inline;
+      color: #fff;
+  `}
 `;
 
 const Overlay = styled.div`
@@ -64,12 +99,16 @@ export default class NavBar extends PureComponent {
   render() {
     return (
       <NavWrapper>
-        <button onClick={() => this.toggleNav()}>Menu</button>
+        <NavButton onClick={() => this.toggleNav()}>
+          <div></div>
+        </NavButton>
+
         <Nav className={this.state.opened ? 'active' : ''}>
           <Link to='/'>Dashboard</Link>
           <Link to='/profile'>Profile</Link>
           <Link to='/transactions'>Transactions</Link>
         </Nav>
+
         <Overlay
           onClick={() => this.toggleNav()}
           className={this.state.opened ? 'active' : ''}
