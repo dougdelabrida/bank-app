@@ -42,7 +42,7 @@ const Bottom = styled.div`
 
 class Transactions extends PureComponent {
   componentDidMount() {
-    if (!this.props.transactions.isFetching) {
+    if (!this.props.transactions.isFetching && this.props.transactions.data.length === 0) {
       this.props.actions.fetchTransactions('0044533', 0, 15);
     }
   }

@@ -8,7 +8,7 @@ export const fetchTransactions = (accountNumber, offset = 0, limit = 5) => {
   return (dispatch, getState) => {
     const { transactions } = getState();
 
-    if (transactions.limit > limit) return; 
+    if (transactions.limit > limit) return;
 
     dispatch({ type: FETCH_REQUEST})
     
