@@ -1,13 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { injectGlobal, ThemeProvider } from 'styled-components';
-
-import routes from './routes';
+import { Provider } from 'react-redux';
 import Layout from './components/Layout';
 
+import routes from './routes';
+import store from './store';
+
+const storeInstace = store();
+
 const mainTheme = {
-  blueGradient: 'linear-gradient(to right, #000428, #004e92)'
-}
+  blueGradient: 'linear-gradient(to right, #000428, #004e92)',
+  mainBlue: '#002d62'
+};
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
@@ -24,21 +29,23 @@ injectGlobal`
 `;
 
 export default () => (
-  <ThemeProvider theme={mainTheme}>
-    <Switch>
+  <Provider store={storeInstace}>
+    <ThemeProvider theme={mainTheme}>
+      <Switch>
 
-      {routes.private.map((route, i) =>
-        <Route exact path={route.path} key={i} render={props =>
-          <Layout>
-            <route.component />
-          </Layout>
-        } />
-      )}
+        {routes.private.map((route, i) =>
+          <Route exact path={route.path} key={i} render={props =>
+            <Layout>
+              <route.component />
+            </Layout>
+          } />
+        )}
 
-      {routes.public.map((route, i) =>
-        <Route path={route.path} key={i} render={props => <route.component />} />
-      )}
+        {routes.public.map((route, i) =>
+          <Route path={route.path} key={i} render={props => <route.component />} />
+        )}
 
-    </Switch>
-  </ThemeProvider>
+      </Switch>
+    </ThemeProvider>
+  </Provider>
 )
