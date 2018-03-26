@@ -1,5 +1,5 @@
 # Bank App
-A simple project.
+A simple bank app project using react, redux and styled-components.
 
 ### Development
 
@@ -25,6 +25,13 @@ Once the installation is complete, you're able to run the project
     ├── CHANGELOG.md
     ├── LICENSE.md
     └── README.md
+
+### TODO
+
+- Implement save profile
+- Implement select account in transactions page
+- Implement Login Page
+- Implement Unit tests
 
 ### Versioning
 See CHANGELOG.md
