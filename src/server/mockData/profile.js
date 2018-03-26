@@ -6,7 +6,7 @@ module.exports = {
   "phone": "+5531991932903",
   "address": {
     "street": "Afonso Pena #100",
-    "city:": "Belo Horizonte",
+    "city": "Belo Horizonte",
     "state": "Minas Gerais",
     "zipCode": "000000000",
     "country": "Brazil"

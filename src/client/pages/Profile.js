@@ -3,6 +3,9 @@ import PageTitle from '../components/PageTitle';
 import Input from '../components/Input';
 import styled from 'styled-components';
 import Button from '../components/Button';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { fetchProfile, updateProfile } from '../actions/profile';
 
 const ProfileForm = styled.form`
   display: block;
@@ -29,17 +32,6 @@ const InputGroup = styled.div`
 class Profile extends Component {
 
   state = {
-    firstName: 'Douglas',
-    lastName: 'Delabrida',
-    phone: '',
-    email: '',
-    address: {
-      street: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: ''
-    },
     editing: false
   }
 
@@ -73,20 +65,29 @@ class Profile extends Component {
     });
   }
 
+  handleSave(event) {
+    event.preventDefault();
+    const newProfile = Object.assign(this.props.profile.data, this.state);
+    console.log('saving ', newProfile);
+  }
+
   render() {
- 
+    const { profile = {} } = this.props;
+
+    if (!profile.data) return <div>Loading...</div>
+
     return (
       <div>
         <PageTitle>
           Profile
         </PageTitle>
-        <ProfileForm>
+        <ProfileForm onSubmit={event => this.handleSave(event)}>
           <InputGroup>
             <Input
               name="firstName"
               type="text"
               placeholder="First Name"
-              value={this.state.firstName}
+              defaultValue={profile.data.firstName}
               onChange={event => this.handleInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -95,7 +96,7 @@ class Profile extends Component {
               name="lastName"
               type="text"
               placeholder="Last Name"
-              value={this.state.lastName}
+              defaultValue={profile.data.lastName}
               onChange={event => this.handleInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -106,7 +107,7 @@ class Profile extends Component {
               name="phone"
               type="text"
               placeholder="Phone Number"
-              value={this.state.phone}
+              defaultValue={profile.data.phone}
               onChange={event => this.handleInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -115,7 +116,7 @@ class Profile extends Component {
               name="email"
               type="email"
               placeholder="Email"
-              value={this.state.email}
+              defaultValue={profile.data.email}
               onChange={event => this.handleInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -126,7 +127,7 @@ class Profile extends Component {
               name="street"
               type="text"
               placeholder="Street"
-              value={this.state.address.street}
+              defaultValue={profile.data.address.street}
               onChange={event => this.handleAddressInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -135,7 +136,7 @@ class Profile extends Component {
               name="city"
               type="text"
               placeholder="City"
-              value={this.state.address.city}
+              defaultValue={profile.data.address.city}
               onChange={event => this.handleAddressInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -146,7 +147,7 @@ class Profile extends Component {
               name="state"
               type="text"
               placeholder="State"
-              value={this.state.address.state}
+              defaultValue={profile.data.address.state}
               onChange={event => this.handleAddressInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -155,7 +156,7 @@ class Profile extends Component {
               name="zipCode"
               type="text"
               placeholder="Zip Code"
-              value={this.state.address.zipCode}
+              defaultValue={profile.data.address.zipCode}
               onChange={event => this.handleAddressInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -164,7 +165,7 @@ class Profile extends Component {
               name="country"
               type="text"
               placeholder="Country"
-              value={this.state.address.country}
+              defaultValue={profile.data.address.country}
               onChange={event => this.handleAddressInputChange(event)}
               disabled={!this.state.editing}
               required
@@ -174,7 +175,7 @@ class Profile extends Component {
             {!this.state.editing && <Button type="button" onClick={() => this.toggleEdit()}>Edit Profile</Button>}
             {this.state.editing && (
               <div>
-                <Button type="button" onClick={() => this.toggleEdit()}>Save</Button>
+                <Button type="submit">Save</Button>
                 <Button type="button" onClick={() => this.toggleEdit()}>Cancel</Button>
               </div>
             )}
@@ -185,4 +186,25 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = state => {
+  return {
+    profile: state.profile
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+
+  dispatch(fetchProfile());
+
+  return {
+    actions: bindActionCreators({
+      fetchProfile,
+      updateProfile
+    }, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);

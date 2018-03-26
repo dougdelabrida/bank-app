@@ -70,6 +70,10 @@ router.get('/profile', function (req, res) {
   res.json(response);
 });
 
+router.put('/profile', function (req, res) {
+
+});
+
 app.use('/api', router);
 
 app.listen(3000, function (error) {
